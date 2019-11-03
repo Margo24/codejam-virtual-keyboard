@@ -1,0 +1,24 @@
+{
+  "name": "virtual-keyboard",
+  "version": "1.0.0",
+  "description": "virtual keyboard, connected to physical keyboard",
+  "main": "script.js",
+  "scripts": {
+    "test": "\"echo \\\"Error: no test specified\\\" && exit 1\""
+  },
+  "repository": {
+    "type": "git",
+    "url": "codejam-virtual-keyboard"
+  },
+  "keywords": [
+    "virtual",
+    "keyboard"
+  ],
+  "author": "Margo24",
+  "license": "ISC",
+  "devDependencies": {
+    "eslint": "^6.6.0",
+    "eslint-config-airbnb-base": "^14.0.0",
+    "eslint-plugin-import": "^2.18.2"
+  }
+}
