@@ -11,8 +11,6 @@ TextInput.appendChild(input);
 //dom output
 document.body.append(TextInput);
 
-console.log(input.value);
-
 // draw keyboard
 const Keyboard = {
     elements: {
@@ -61,6 +59,12 @@ const Keyboard = {
             keyElement.classList.add("keyboard__key");
 
             switch (key) {
+                case "Del":
+                case "Win":
+                case "Alt":
+                    keyElement.textContent = key;
+                    break;
+
                 case "Tab":
                     keyElement.textContent = key;
                     keyElement.addEventListener("click", () => {
@@ -77,11 +81,12 @@ const Keyboard = {
 
                     break;
 
+                case "Shift":
                 case "Caps":
                     keyElement.textContent = key;
                     keyElement.addEventListener("click", () => {
                         this._toggleCapsLock();
-                        keyElement.classList.toggle("keyboard__key--active", this.properties.capsLock);
+                        //keyElement.classList.toggle("keyboard__key--active", this.properties.capsLock);
                     });
 
                     break;
@@ -116,6 +121,8 @@ const Keyboard = {
 
             fragment.appendChild(keyElement);
 
+            //keyElement.addEventListener()
+
             if (insertLineBreak && index !== 40) {
                 fragment.appendChild(document.createElement("br"));
             }
@@ -126,15 +133,51 @@ const Keyboard = {
 
     _toggleCapsLock() {
         this.properties.capsLock = !this.properties.capsLock;
-
         for (const key of this.elements.keys) {
-            if (key.childElementCount === 0) {
+            const FixedText = ["Backspace", "Tab", "Del", "Caps", "Enter", "Shift", "Ctrl", "Win", "Alt", "Space"].indexOf(key.textContent) === -1;
+            if (key.childElementCount === 0 && FixedText) {
                 key.textContent = this.properties.capsLock ? key.textContent.toUpperCase() : key.textContent.toLowerCase();
             }
         }
+    },
+
+    keyPress (index) {
+        this.elements.keys[index].classList.add('physical-key-press');
+    },
+
+    keyRelease (index) {
+        this.elements.keys[index].classList.remove('physical-key-press');
     }
+
 };
 
 window.addEventListener("DOMContentLoaded", function () {
     Keyboard.init();
+});
+
+const keyCode = [
+    "Backquote","Digit1", "Digit2", "Digit3", "Digit4", "Digit5", "Digit6", "Digit7", "Digit8", "Digit9", "Digit0", "Backspace",
+    "Tab","KeyQ", "KeyW", "KeyE", "KeyR", "KeyT", "KeyY", "KeyU", "KeyI", "KeyO", "KeyP", "BracketLeft", "BracketRight", "Backslash", "Delete",
+    "CapsLock", "KeyA", "KeyS", "KeyD", "KeyF", "KeyG", "KeyH", "KeyJ", "KeyK", "KeyL", "Semicolon", "Quote", "Enter",
+    "ShiftLeft", "Backslash", "KeyZ", "KeyX", "KeyC", "KeyV", "KeyB", "KeyN", "KeyM", "Comma", "Period", "Slash", "ArrowUp", "ShiftRight",
+    "ControlLeft", "MetaLeft", "AltLeft", "Space", "AltRight", "ControlRight", "ArrowLeft", "ArrowDown", "ArrowRight"
+];
+
+const KeyboardChildren = Keyboard._createKeys().childNodes;
+const generatedKeys = [];
+//delete "br" nodes
+for (const key of KeyboardChildren) {
+    if (key.localName !== 'br') {
+        generatedKeys.push(key);
+    }
+}
+
+document.addEventListener('keydown', (e) => {
+    const IndexOfPressedKey = keyCode.indexOf(e.code);
+    Keyboard.keyPress(IndexOfPressedKey);
+});
+
+document.addEventListener('keyup', (e) => {
+    const IndexOfPressedKey = keyCode.indexOf(e.code);
+    Keyboard.keyRelease(IndexOfPressedKey);
 });

@@ -1,3 +1,8 @@
+@mixin pressed-key() {
+  border-radius: 30px;
+  background-color: navy;
+}
+
 .text-input {
   width: auto;
   height: auto;
@@ -40,10 +45,12 @@
 }
 
 .keyboard__key:active {
-  border-radius: 30px;
-  background-color: navy;
+  @include pressed-key();
 }
 
+.physical-key-press {
+  @include pressed-key();
+}
 
 
 
