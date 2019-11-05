@@ -43,8 +43,8 @@ const Keyboard = {
     _createKeys() {
         const fragment = document.createDocumentFragment();
         const keyLayout = [
-            "~","1", "2", "3", "4", "5", "6", "7", "8", "9", "0", "Backspace",
-            "Tab","q", "w", "e", "r", "t", "y", "u", "i", "o", "p", "[", "]", "\\", "Del",
+            "~`","!1", "@2", "#3", "$4", "%5", ":6", "?7", "*8", "(9", ")0", "_-", "+=", "Backspace",
+            "Tab","q", "w", "e", "r", "t", "y", "u", "i", "o", "p", "[", "]", "/\\", "Del",
             "Caps", "a", "s", "d", "f", "g", "h", "j", "k", "l", ";", "'", "Enter",
             "Shift", "\\", "z", "x", "c", "v", "b", "n", "m", ",", ".", "/", "↑", "Shift",
             "Ctrl", "Win", "Alt", "Space", "Alt", "Ctrl", "←", "↓", "→"
@@ -86,7 +86,6 @@ const Keyboard = {
                     keyElement.textContent = key;
                     keyElement.addEventListener("click", () => {
                         this._toggleCapsLock();
-                        //keyElement.classList.toggle("keyboard__key--active", this.properties.capsLock);
                     });
 
                     break;
@@ -109,21 +108,24 @@ const Keyboard = {
                     break;
 
                 default:
-                    //keyElement.textContent = key.toLowerCase();
-                    keyElement.textContent = key;
-
-                    keyElement.addEventListener("click", () => {
-                        input.value += this.properties.capsLock ? key.toUpperCase() : key.toLowerCase();
-                    });
+                    if ((index >=0 && index<14) || index === 27){
+                        keyElement.innerHTML = "<sup>"+key[0]+"</sup>"+" "+key[1];
+                        keyElement.addEventListener("click", () => {
+                            input.value += this.properties.capsLock ? key[0] : key[1];
+                        });
+                    }else {
+                        keyElement.textContent = key;
+                        keyElement.addEventListener("click", () => {
+                            input.value += this.properties.capsLock ? key.toUpperCase() : key.toLowerCase();
+                        });
+                    }
 
                     break;
             }
 
             fragment.appendChild(keyElement);
 
-            //keyElement.addEventListener()
-
-            if (insertLineBreak && index !== 40) {
+            if (insertLineBreak && index !== 42) {
                 fragment.appendChild(document.createElement("br"));
             }
         });
@@ -156,7 +158,7 @@ window.addEventListener("DOMContentLoaded", function () {
 });
 
 const keyCode = [
-    "Backquote","Digit1", "Digit2", "Digit3", "Digit4", "Digit5", "Digit6", "Digit7", "Digit8", "Digit9", "Digit0", "Backspace",
+    "Backquote","Digit1", "Digit2", "Digit3", "Digit4", "Digit5", "Digit6", "Digit7", "Digit8", "Digit9", "Digit0", "Minus", "Equal", "Backspace",
     "Tab","KeyQ", "KeyW", "KeyE", "KeyR", "KeyT", "KeyY", "KeyU", "KeyI", "KeyO", "KeyP", "BracketLeft", "BracketRight", "Backslash", "Delete",
     "CapsLock", "KeyA", "KeyS", "KeyD", "KeyF", "KeyG", "KeyH", "KeyJ", "KeyK", "KeyL", "Semicolon", "Quote", "Enter",
     "ShiftLeft", "Backslash", "KeyZ", "KeyX", "KeyC", "KeyV", "KeyB", "KeyN", "KeyM", "Comma", "Period", "Slash", "ArrowUp", "ShiftRight",
