@@ -11,7 +11,7 @@
 
 .keyboard-area {
   width: 100%;
-  max-width: 1400px;
+  max-width: 1500px;
   min-width: 700px;
   padding: 5px 0;
   user-select: none;
@@ -25,6 +25,8 @@
 .keyboard__key {
   width: auto;
   max-width: 230px;
+  min-width: 75px;
+  min-height: 65px;
   padding: 15px 20px;
   margin: 7px;
   border-radius: 5px;
@@ -33,7 +35,7 @@
   font-family: Arial, sans-serif;
   font-size: 21px;
   cursor: pointer;
-  transition: border-radius .3s,background .2s
+  transition: border-radius .3s,background .2s;
 }
 
 .wide {
