@@ -229,15 +229,15 @@ document.addEventListener('keydown', (e) => {
     const IndexOfPressedKey = keyCode.indexOf(e.code);
     Keyboard.keyPress(IndexOfPressedKey);
     pressed.push(e.code);
-    if (pressed.indexOf("ShiftLeft")>=0 && pressed.indexOf("AltLeft")>=0){
-        CallChangeLanguage();
-    }
 
 });
 
 document.addEventListener('keyup', (e) => {
     const IndexOfPressedKey = keyCode.indexOf(e.code);
     Keyboard.keyRelease(IndexOfPressedKey);
+    if (pressed.indexOf("ShiftLeft")>=0 && pressed.indexOf("AltLeft")>=0){
+        CallChangeLanguage();
+    }
     pressed = [];
 });
 
