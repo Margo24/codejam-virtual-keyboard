@@ -1,8 +1,3 @@
-@mixin pressed-key() {
-  border-radius: 30px;
-  background-color: navy;
-}
-
 .text-input {
   width: auto;
   height: auto;
@@ -35,7 +30,7 @@
   font-family: Arial, sans-serif;
   font-size: 21px;
   cursor: pointer;
-  transition: border-radius .3s,background .2s;
+  transition: border-radius 0.3s, background 0.2s;
 }
 
 .wide {
@@ -47,9 +42,13 @@
 }
 
 .keyboard__key:active {
-  @include pressed-key();
+  border-radius: 30px;
+  background-color: navy;
 }
 
 .physical-key-press {
-  @include pressed-key();
+  border-radius: 30px;
+  background-color: navy;
 }
+
+/*# sourceMappingURL=style.css.map */

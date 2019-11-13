@@ -254,3 +254,12 @@ function CallChangeLanguage() {
 
     Keyboard.changeLanguage();
 };
+
+//for Win button
+window.addEventListener('blur', function() {
+    pressed.forEach(function(element) {
+        const IndexOfPressedKey = keyCode.indexOf(element);
+        Keyboard.keyRelease(IndexOfPressedKey);
+    });
+    pressed = [];
+});
