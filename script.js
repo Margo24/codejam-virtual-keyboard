@@ -69,7 +69,8 @@ const Keyboard = {
     _createKeys() {
         const fragment = document.createDocumentFragment();
         let keyLayout;
-        if (localStorage.getItem('keyboard_type')===null || localStorage.getItem('keyboard_type')==="english") {
+        const CurrentKeyboardType = localStorage.getItem('keyboard_type');
+        if (CurrentKeyboardType === null || CurrentKeyboardType === "english") {
             keyLayout = keyLayout_english;
         } else {
             keyLayout = keyLayout_russian;
@@ -84,10 +85,27 @@ const Keyboard = {
             keyElement.classList.add("keyboard__key");
 
             switch (key) {
+                case "~`":
+                    keyElement.innerHTML = `<sup>${key[0]}</sup> <sub>${key[1]}</sub>`;
+                    keyElement.addEventListener("click", () => {
+                        input.value += this.properties.capsLock ? key[0] : key[1];
+                    });
+
+                    break;
+
+                case "_-":
+                    keyElement.innerHTML = `<sup>${key[0]}</sup> <sub>${key[1]}</sub>`;
+                    keyElement.addEventListener("click", () => {
+                        input.value += this.properties.capsLock ? key[0] : key[1];
+                    });
+
+                    break;
+
                 case "Del":
                 case "Win":
                 case "Alt":
                     keyElement.textContent = key;
+
                     break;
 
                 case "Tab":
@@ -133,43 +151,19 @@ const Keyboard = {
                     break;
 
                 default:
+                    let isDoubleValue = (index >=1 && index<14)&& index !== 11 || index === 27;
 
-                    if ((index >=0 && index<14) || index === 27){
+                    if (isDoubleValue){
                         //text appearance for keys with "double" values, both layouts cases
-                        switch (index) {
-                            case 0:
-                                 if (localStorage.getItem('keyboard_type')==="russian") {
-                                     keyElement.textContent = key;
-                                     keyElement.addEventListener("click", () => {
-                                         input.value += this.properties.capsLock ? key.toUpperCase() : key.toLowerCase();
-                                     });
-                                 } else {
-                                     keyElement.innerHTML = `<sup>${key[0]}</sup> <sub>${key[1]}</sub>`;
-                                     keyElement.addEventListener("click", () => {
-                                         input.value += this.properties.capsLock ? key[0] : key[1];
-                                     });
-                                 }
 
-                                break;
+                        keyElement.innerHTML = `<sup>${key[0]}</sup> ${key[1]}`;
+                        keyElement.addEventListener("click", () => {
+                            input.value += this.properties.capsLock ? key[0] : key[1];
+                        });
 
-                            case 11:
-                                keyElement.innerHTML = `<sup>${key[0]}</sup> <sub>${key[1]}</sub>`;
-                                keyElement.addEventListener("click", () => {
-                                    input.value += this.properties.capsLock ? key[0] : key[1];
-                                });
-
-                                break;
-
-                            default:
-                                keyElement.innerHTML = `<sup>${key[0]}</sup> ${key[1]}`;
-                                keyElement.addEventListener("click", () => {
-                                    input.value += this.properties.capsLock ? key[0] : key[1];
-                                });
-
-                                break;
-                        }
                     }else {
                         //"standard" key appearance and caps lock reaction
+
                         keyElement.textContent = key;
                         keyElement.addEventListener("click", () => {
                             input.value += this.properties.capsLock ? key.toUpperCase() : key.toLowerCase();
@@ -192,8 +186,9 @@ const Keyboard = {
     _toggleCapsLock() {
         this.properties.capsLock = !this.properties.capsLock;
         for (const key of this.elements.keys) {
-            const FixedText = ["Backspace", "Tab", "Del", "Caps", "Enter", "Shift", "Ctrl", "Win", "Alt", "Space"].indexOf(key.textContent) === -1;
-            if (key.childElementCount === 0 && FixedText) {
+            const FixedText = ["Backspace", "Tab", "Del", "Caps Lock", "Enter", "Shift", "Ctrl", "Win", "Alt", "Space"];
+            const isTransforming = FixedText.indexOf(key.textContent) === -1;
+            if (key.childElementCount === 0 && isTransforming) {
                 key.textContent = this.properties.capsLock ? key.textContent.toUpperCase() : key.textContent.toLowerCase();
             }
         }
@@ -243,13 +238,11 @@ document.addEventListener('keyup', (e) => {
 
 // change keyboard language function
 function CallChangeLanguage() {
-    let localLayout;
-    if (localStorage.getItem('keyboard_type')===null || localStorage.getItem('keyboard_type')==="english") {
+    const KeyboardType = localStorage.getItem('keyboard_type');
+    if (KeyboardType === null || KeyboardType === "english") {
         localStorage.setItem('keyboard_type','russian');
-        localLayout = keyLayout_russian;
     } else {
         localStorage.setItem('keyboard_type','english');
-        localLayout = keyLayout_english;
     }
 
     Keyboard.changeLanguage();
