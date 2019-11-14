@@ -1,0 +1,54 @@
+.text-input {
+  width: auto;
+  height: auto;
+  padding: 15px;
+}
+
+.keyboard-area {
+  width: 100%;
+  max-width: 1500px;
+  min-width: 700px;
+  padding: 5px 0;
+  user-select: none;
+  background-color: gainsboro;
+}
+
+.keyboard__keys {
+  text-align: center;
+}
+
+.keyboard__key {
+  width: auto;
+  max-width: 230px;
+  min-width: 70px;
+  min-height: 60px;
+  padding: 15px;
+  margin: 5px;
+  border-radius: 5px;
+  color: whitesmoke;
+  background-color: #252525;
+  font-family: Arial, sans-serif;
+  font-size: 20px;
+  cursor: pointer;
+  transition: border-radius 0.3s, background 0.2s;
+}
+
+.wide {
+  padding: 15px 80px;
+}
+
+.keyboard__key:hover {
+  background-color: mediumblue;
+}
+
+.keyboard__key:active {
+  border-radius: 30px;
+  background-color: navy;
+}
+
+.physical-key-press {
+  border-radius: 30px;
+  background-color: navy;
+}
+
+/*# sourceMappingURL=style.css.map */
